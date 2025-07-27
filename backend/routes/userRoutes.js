@@ -24,7 +24,7 @@ router.post("/register", async(req,res)=>{
         //create JWT payload
         const payload = { user:{ id: user._id, role: user.role}};
 
-        jwt.sign(payload, process.env.SECRET_KEY, { expiresIn:"40h"}, (err, token)=>{
+        jwt.sign(payload, process.env.SECRET_KEY, { expiresIn:"2h"}, (err, token)=>{
             if(err) throw err;
 
             //send the user and token in response
@@ -62,7 +62,7 @@ router.post("/login", async(req, res)=>{
 
         let payload = { user: { id: user._id, role: user.role}};
 
-        jwt.sign( payload, process.env.SECRET_KEY, {expiresIn : "40h"}, (err, token)=>{
+        jwt.sign( payload, process.env.SECRET_KEY, {expiresIn : "2h"}, (err, token)=>{
             if(err)
                 throw err;
             res.status(201).json({
