@@ -2,6 +2,7 @@ const express = require("express");
 const { protect } = require("../middleware/authMiddleware");
 const CheckOut = require("../models/CheckOut");
 const Order = require("../models/Order");
+const Cart = require('../models/Cart');
 
 const router = express.Router();
 
@@ -65,7 +66,7 @@ router.put("/:id/pay", protect, async(req,res)=>{
 //@route POST /api/checkout/:id/finalize
 //@desc Finalize checkout and convert to an order after payment confirmation
 //@access private
-router.post(":id/finalize", protect, async(req, res)=>{
+router.post("/:id/finalize", protect, async(req, res)=>{
     try {
         const checkout = await CheckOut.findById(req.params.id);
 
@@ -74,6 +75,7 @@ router.post(":id/finalize", protect, async(req, res)=>{
         }
 
         if(checkout.isPaid && !checkout.isFinalised){
+            console.log("reached");
             const finalOrder = await Order.create({
                 user: checkout.user,
                 orderItems: checkout.checkoutItems,

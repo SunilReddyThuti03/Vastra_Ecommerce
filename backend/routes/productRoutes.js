@@ -2,7 +2,7 @@ const express = require("express");
 const Product = require("../models/Products");
 const { protect, admin } = require("../middleware/authMiddleware");
 const { validateMongoDBId} = require("../middleware/validateMongodbid");
-const { validate } = require("../models/User");
+const { validate } = require("../models/Users");
 
 
 const router = express.Router();
@@ -102,22 +102,23 @@ router.delete("/:id", validateMongoDBId, protect, admin, async(req, res)=>{
 //@access public 
 router.get("/", async(req,res)=>{
     try {
+        
         const { collection, size, color, gender, minPrice, maxPrice, sortBy, search, category, material, brand, limit} = req.query;
 
         let query = {};
-
+        
         if(collection && collection.toLocaleLowerCase()!=="all")
             query.collection = collection;
         if(category && category.toLocaleLowerCase()!== "all")
             query.category = category;
         if(material)
-            query.material;
+            query.material={$in : material.split(",")};
         if(brand)
-            query.brand = brand;
+            query.brand = {$in : brand.split(",")};
         if(size)
-            query.size = size;
+            query.sizes = {$in : size.split(",")};
         if(color)
-            query.color = color;
+            query.colors ={$in: [color]};
         if(gender)
             query.gender = gender;
 

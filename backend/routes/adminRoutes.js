@@ -1,5 +1,5 @@
 const express = require("express");
-const Users  = require("../models/User");
+const Users  = require("../models/Users");
 const { protect, admin} = require("../middleware/authMiddleware");
 
 const router = express.Router();
@@ -21,7 +21,8 @@ router.get("/", protect, admin, async(req, res)=>{
 //@desc Add a new user
 //@access private admin
 router.post("/", protect, admin, async(req, res)=>{
-    const { name, email, password, role} = req.nody;
+    const { name, email, password, role} = req.body;
+    console.log("reached");
     try {
         const userEmail = await Users.findOne({email});
         if(userEmail)

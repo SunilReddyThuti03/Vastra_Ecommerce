@@ -21,7 +21,7 @@ const checkoutItemSchema = new mongoose.Schema(
         },
         size: String,
         color:String,
-        qunatity: {
+        quantity: {
             type: Number,
             required: true,
         }
