@@ -125,6 +125,7 @@ const Login = () => {
               Register
             </Link>
           </p>
+          <p className='font-bold text-black  mt-3'>**Note:<span className='text-gray-400 text-sm'>{"  "}Register and login with any random email like user@gmail.com — no mails sent or verified. </span>**</p>
         </form>
       </div>
 
