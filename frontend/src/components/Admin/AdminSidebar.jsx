@@ -7,7 +7,7 @@ import { logout } from '../../Redux/slices/AuthSlice';
 import { clearCart } from '../../Redux/slices/cartSlice';
 
 
-const AdminSidebar = () => {
+const AdminSidebar = ({toggleSidebar}) => {
     const navigate =useNavigate();
     const dispatch = useDispatch();
     const handleLogout = () =>{
@@ -24,6 +24,7 @@ const AdminSidebar = () => {
         <nav className='flex flex-col space-y-2 '>
             <NavLink
                 to="/admin/users"
+                onClick={()=>toggleSidebar()}
                 className={({isActive})=>
                 isActive  ? " bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2"
                 : "text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4  rounded flex items-center space-x-2"
@@ -33,6 +34,7 @@ const AdminSidebar = () => {
             </NavLink>
             <NavLink
                 to="/admin/products"
+                onClick={()=>toggleSidebar()}
                 className={({isActive})=>
                 isActive  ? " bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2"
                 : "text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4  rounded flex items-center space-x-2"
@@ -42,6 +44,7 @@ const AdminSidebar = () => {
             </NavLink>
             <NavLink
                 to="/admin/orders"
+                onClick={()=>toggleSidebar()}
                 className={({isActive})=>
                 isActive  ? " bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2"
                 : "text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4  rounded flex items-center space-x-2"
@@ -51,6 +54,7 @@ const AdminSidebar = () => {
             </NavLink>
             <NavLink
                 to="/"
+                onClick={()=>toggleSidebar()}
                 className={({isActive})=>
                 isActive  ? " bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2"
                 : "text-gray-300 hover:bg-gray-700 hover:text-white py-3 px-4  rounded flex items-center space-x-2"

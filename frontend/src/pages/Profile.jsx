@@ -1,15 +1,17 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import MyorderPage from './MyorderPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import {logout} from "../Redux/slices/AuthSlice";
 import { clearCart } from '../Redux/slices/cartSlice';
-
+import { FaGift } from 'react-icons/fa';
 
 const Profile = () => {
     const {user, guestId} = useSelector((state)=> state.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const [openBox, setOpenBox] = useState(false);
     useEffect(()=>{
         if(!user){
             navigate("/login");
@@ -34,6 +36,16 @@ const Profile = () => {
                     className='w-full bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-700'>
                         Logout
                     </button>
+                    <div className='mt-10'>
+                        <h1 className='text-pink-600 font-bold text-2xl'>SUPRISE !!</h1>
+                        <FaGift className='text-5xl text-red-700 mx-auto mt-4'  onClick={()=>setOpenBox(!openBox)}/>
+                    </div>
+                   {openBox && <div className='mt-5'>
+                        <label> Experience website as Admin:</label>
+                        <p className='text-sm font-bold text-black'>email: admin2@gmail.com</p>
+                        <p className='text-sm font-bold text-black'>password: Admin@2</p>
+                        <label> </label>
+                    </div>}
                 </div>
                 <div className='w-full md:w-2/3 lg:w-3/4'>
                     <MyorderPage/>

@@ -40,9 +40,9 @@ const ProductsManagement = () => {
                             <td className='px-4 py-2'>{product.sku}</td>
                             <td className='px-4 py-2'>
                                 <Link to={`/admin/products/${product._id}/edit`}
-                                className='bg-yellow-500 px-4 hover:bg-yellow-600 py-2 text-white rounded mr-2'>Edit</Link>
+                                className='bg-yellow-500 px-4  hover:bg-yellow-600 py-2 text-white rounded mr-2'>Edit</Link>
                                 <button onClick={()=>handleDelete(product._id)}
-                                    className='bg-red-500 px-4 py-2 hover:bg-red-600 text-white rounded'>DELETE</button>
+                                    className='bg-red-500 sm:m-3 px-4 py-2 hover:bg-red-600 text-white rounded'>DELETE</button>
                             </td>
                         </tr>
                     )):(

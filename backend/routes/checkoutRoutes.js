@@ -24,7 +24,7 @@ router.post("/", protect, async(req, res)=>{
             paymentStatus:"Pending",
             isPaid: false,
         });
-        console.log(`checkout created for user: ${req.user._id}`);
+
         res.status(201).json(newCheckout);
     } catch (error) {
         console.error(error);
@@ -75,7 +75,7 @@ router.post("/:id/finalize", protect, async(req, res)=>{
         }
 
         if(checkout.isPaid && !checkout.isFinalised){
-            console.log("reached");
+
             const finalOrder = await Order.create({
                 user: checkout.user,
                 orderItems: checkout.checkoutItems,

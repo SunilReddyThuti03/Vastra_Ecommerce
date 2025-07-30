@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   HiOutlineUser,
   HiOutlineShoppingBag,
@@ -18,6 +18,10 @@ const Navbar = () => {
   const { user, guestId } = useSelector((state) => state.auth);
   const { cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const hideButtonPaths = ['/login', '/register'];
+  const currentPath = location.pathname + location.search;
 
   const totalItems = (cart?.products ?? []).reduce(
     (total, item) => item.quantity + total,
@@ -38,6 +42,11 @@ const Navbar = () => {
     }
   }, [user, dispatch, guestId]);
 
+  const getActiveClass = (path) =>
+    currentPath.includes(path)
+      ? 'bg-black text-white'
+      : 'hover:bg-gray-500 hover:text-black text-gray-700';
+
   return (
     <>
       {/* Top Navbar */}
@@ -48,12 +57,12 @@ const Navbar = () => {
         </div>
 
         {/* Center nav links - hidden on mobile */}
-        <div className="hidden md:flex space-x-6">
+        <div className="hidden md:flex space-x-4">
           {['Men', 'Women'].map((gender) => (
             <Link
               key={gender}
               to={`/collections/all?gender=${gender}`}
-              className="text-gray-700 hover:text-black text-sm font-medium uppercase"
+              className={`text-sm font-medium uppercase px-3 py-1 rounded ${getActiveClass(`gender=${gender}`)}`}
             >
               {gender}
             </Link>
@@ -62,7 +71,7 @@ const Navbar = () => {
             <Link
               key={category}
               to={`/collections/all?category=${category}`}
-              className="text-gray-700 hover:text-black text-sm font-medium uppercase"
+              className={`text-sm font-medium uppercase px-3 py-1 rounded ${getActiveClass(`category=${category}`)}`}
             >
               {category}
             </Link>
@@ -79,10 +88,16 @@ const Navbar = () => {
               Admin
             </Link>
           )}
-
-          <Link to="/profile" className="hover:text-black">
-            <HiOutlineUser className="h-6 w-6 text-gray-700" />
-          </Link>
+          {user ? (
+            <Link to="/profile" className="hover:text-black">
+              <HiOutlineUser className="h-6 w-6 text-gray-700" />
+            </Link>
+          ) : (
+            !(hideButtonPaths.includes(location.pathname)) &&
+            <Link to="/login">
+              <button className="bg-black text-sm text-white rounded px-2 py-1 font-medium">Login / Signup</button>
+            </Link>
+          )}
 
           <button className="relative hover:text-black" onClick={handleDrawerToggle}>
             <HiOutlineShoppingBag className="h-6 w-6 text-gray-700" />
@@ -126,7 +141,7 @@ const Navbar = () => {
               key={gender}
               to={`/collections/all?gender=${gender}`}
               onClick={handleNavbarDrawer}
-              className="text-gray-700 hover:text-black uppercase"
+              className={`uppercase px-3 py-1 rounded ${getActiveClass(`gender=${gender}`)}`}
             >
               {gender}
             </Link>
@@ -136,7 +151,7 @@ const Navbar = () => {
               key={category}
               to={`/collections/all?category=${category}`}
               onClick={handleNavbarDrawer}
-              className="text-gray-700 hover:text-black uppercase"
+              className={`uppercase px-3 py-1 rounded ${getActiveClass(`category=${category}`)}`}
             >
               {category}
             </Link>
@@ -147,7 +162,7 @@ const Navbar = () => {
         </nav>
       </div>
 
-      {/* Backdrop (optional) */}
+      {/* Backdrop */}
       {navbarDrawerOpen && (
         <div
           onClick={handleNavbarDrawer}

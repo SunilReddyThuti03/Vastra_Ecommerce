@@ -22,7 +22,6 @@ router.get("/", protect, admin, async(req, res)=>{
 //@access private admin
 router.post("/", protect, admin, async(req, res)=>{
     const { name, email, password, role} = req.body;
-    console.log("reached");
     try {
         const userEmail = await Users.findOne({email});
         if(userEmail)
